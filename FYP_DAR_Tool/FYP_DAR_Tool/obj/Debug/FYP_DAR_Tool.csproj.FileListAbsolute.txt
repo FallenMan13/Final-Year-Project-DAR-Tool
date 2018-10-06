@@ -1,0 +1,10 @@
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\bin\Debug\FYP_DAR_Tool.exe.config
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\bin\Debug\FYP_DAR_Tool.exe
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\bin\Debug\FYP_DAR_Tool.pdb
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.csprojResolveAssemblyReference.cache
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.frmCriteria.resources
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.Properties.Resources.resources
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.csproj.GenerateResource.Cache
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.csproj.CoreCompileInputs.cache
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.exe
+D:\Desktop\UU Final Year Project and Sem 1 Timetable\Final_Year_Project_DAR_Tool\Final-Year-Project-DAR-Tool\FYP_DAR_Tool\FYP_DAR_Tool\obj\Debug\FYP_DAR_Tool.pdb
