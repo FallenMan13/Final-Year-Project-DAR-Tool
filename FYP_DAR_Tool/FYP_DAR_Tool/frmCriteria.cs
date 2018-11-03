@@ -8,75 +8,136 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FYP_DAR_Tool
 {
     public partial class frmCriteria : Form
     {
         //Code written by Ross Craig B00705624
-        //Variables
-        private ArrayList mainCriteria = new ArrayList();
-        private ArrayList subCriteria = new ArrayList();
+        
         
         public frmCriteria()
         {
             InitializeComponent();
         }
 
-        //Function to refresh the list box and display the newly entered criteria
-        private void Refresh_ListBox()
+        private void btnBackToDecisionFrm_Click(object sender, EventArgs e)
         {
-            lstDisplay.Items.Clear();
-            lstDisplay.Items.Add("Main Criteria");
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
 
-            foreach(Object o in mainCriteria)
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
             {
-                lstDisplay.Items.Add(o);
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE Decision SET IsCurrentDecision = 0 WHERE DecisionName = @Decision"))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@Decision", lblCurrDecision.Text);
+
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
             }
+            var decision = new frmDecision();
+            this.Hide();
+            decision.Show();
+        }
 
-            lstDisplay.Items.Add("");
-            lstDisplay.Items.Add("Sub Criteria");
+        private void RefreshData()
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
 
-            foreach(Object j in subCriteria)
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
             {
-                lstDisplay.Items.Add(j);
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT DecisionName FROM Decision WHERE IsCurrentDecision = 1"))
+                {
+                    
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    SqlDataReader DR = cmd.ExecuteReader();
+
+                    while (DR.Read())
+                    {
+                        lblCurrDecision.Text = DR[0].ToString();
+                    }
+                    DR.Close();
+                }
+
+                using (SqlCommand cmd = new SqlCommand("SELECT CriteriaName FROM MainCriteria"))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    cmbMainCriteria.Items.Clear();
+
+                    SqlDataReader DR = cmd.ExecuteReader();
+
+                    while (DR.Read())
+                    {
+                        cmbMainCriteria.Items.Add(DR[0]);
+                    }
+                    DR.Close();
+                }
+
+                using (SqlCommand cmd = new SqlCommand("SELECT CriteriaWeighting, CriteriaName FROM MainCriteria"))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    lstDisplay.Items.Clear();
+
+                    SqlDataReader DR = cmd.ExecuteReader();
+
+                    while (DR.Read())
+                    {
+                        lstDisplay.Items.Add(DR[0] + "\t" + DR[1]);
+                    }
+                    DR.Close();
+                }
+
+                conn.Close();
             }
         }
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+        private void frmCriteria_Load(object sender, EventArgs e)
         {
-            if(txtMainCriWeight.Text != "" && txtMainCriName.Text != "")
+            RefreshData();
+        }
+
+        private void btnSubmitMainCriteria_Click(object sender, EventArgs e)
+        {
+            if (txtMainCriName.Text == "" || txtMainCriWeight.Text == "")
             {
-                int tempMainCriWeight = Convert.ToInt32(txtMainCriWeight.Text);
-                String tempMainCriName = txtMainCriName.Text;
-
-                MainCriteria M1 = new MainCriteria(tempMainCriWeight, tempMainCriName);
-
-                mainCriteria.Add(M1.Weighting);
-                mainCriteria.Add(M1.Criteria);
-
-                txtMainCriWeight.Text = "";
-                txtMainCriName.Text = "";
+                MessageBox.Show("Please enter both the name of the criteria and the weighting");
             }
-            
-            if(txtSubCriWeight.Text != "" && txtRltdMainCriName.Text != "" && txtSubCriName.Text != "")
+            else if (txtMainCriName.Text != "" && txtMainCriWeight.Text != "")
             {
-                int tempSubCriWeight = Convert.ToInt32(txtSubCriWeight.Text);
-                String tempRltdMainCriName = txtRltdMainCriName.Text;
-                String tempSubCriName = txtSubCriName.Text;
+                var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connection.ToString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO MainCriteria (DecisionName, CriteriaName, CriteriaWeighting) VALUES (@Decision, @CriteriaName, @CriteriaWeighting)"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
 
-                SubCriteria S1 = new SubCriteria(tempSubCriWeight, tempRltdMainCriName, tempSubCriName);
+                        cmd.Parameters.AddWithValue("@Decision", lblCurrDecision.Text);
+                        cmd.Parameters.AddWithValue("@CriteriaName", txtMainCriName.Text);
+                        cmd.Parameters.AddWithValue("@CriteriaWeighting", txtMainCriWeight.Text);
 
-                subCriteria.Add(S1.Weighting);
-                subCriteria.Add(S1.MainCriteria);
-                subCriteria.Add(S1.Criteria);
-
-                txtSubCriWeight.Text = "";
-                txtRltdMainCriName.Text = "";
-                txtSubCriName.Text = "";
+                        cmd.ExecuteNonQuery();
+                    }
+                    txtMainCriName.Text = "";
+                    txtMainCriWeight.Text = "";
+                    conn.Close();
+                }
             }
-
-            Refresh_ListBox();
+            RefreshData();
         }
     }
 }

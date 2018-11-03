@@ -16,7 +16,7 @@ namespace FYP_DAR_Tool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmCriteria());
+            Application.Run(new frmDecision());
         }
     }
 }
