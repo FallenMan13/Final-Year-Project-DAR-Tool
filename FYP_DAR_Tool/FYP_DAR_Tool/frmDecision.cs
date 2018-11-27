@@ -29,7 +29,7 @@ namespace FYP_DAR_Tool
                 using (SqlCommand cmd = new SqlCommand("SELECT DecisionName FROM Decision"))
                 {
                     cmbDecision.Items.Clear();
-                    listBox1.Items.Clear();
+                    lstDecisionDisplay.Items.Clear();
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
 
@@ -38,7 +38,7 @@ namespace FYP_DAR_Tool
                     while (DR.Read())
                     {
                         cmbDecision.Items.Add(DR[0]);
-                        listBox1.Items.Add(DR[0]);
+                        lstDecisionDisplay.Items.Add(DR[0]);
                     }
                     DR.Close();
                 }
@@ -96,6 +96,63 @@ namespace FYP_DAR_Tool
             var criteria = new frmCriteria();
             this.Hide();
             criteria.Show();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstDecisionDisplay.SelectedIndex == -1 || txtDecisionName.Text == "")
+                {
+                    MessageBox.Show("Please select one of the decision names from the list by clicking on it and please enter the name you wish to change the selected decision to.");
+                }
+                else if (lstDecisionDisplay.SelectedIndex != -1 && txtDecisionName.Text != "")
+                {
+                    using (SqlCommand cmd = new SqlCommand("UPDATE Decision SET DecisionName = @DecisionName WHERE DecisionName = '" + lstDecisionDisplay.SelectedItem.ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.Parameters.AddWithValue("@DecisionName", txtDecisionName.Text);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            txtDecisionName.Text = "";
+            RefreshData();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstDecisionDisplay.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please select the name of the decision you wish to delete by clicking on it..");
+                }
+                else if (lstDecisionDisplay.SelectedIndex != -1)
+                {
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Decision WHERE DecisionName = @DecisionName"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.Parameters.AddWithValue("@DecisionName", lstDecisionDisplay.SelectedItem.ToString());
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            RefreshData();
         }
     }
 }

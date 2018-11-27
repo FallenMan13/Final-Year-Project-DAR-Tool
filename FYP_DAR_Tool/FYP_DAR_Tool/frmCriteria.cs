@@ -68,7 +68,7 @@ namespace FYP_DAR_Tool
                     DR.Close();
                 }
 
-                using (SqlCommand cmd = new SqlCommand("SELECT CriteriaName FROM MainCriteria"))
+                using (SqlCommand cmd = new SqlCommand("SELECT MainCriteriaName FROM MainCriteria WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "'"))
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
@@ -84,19 +84,48 @@ namespace FYP_DAR_Tool
                     DR.Close();
                 }
 
-                using (SqlCommand cmd = new SqlCommand("SELECT CriteriaWeighting, CriteriaName FROM MainCriteria"))
+                using (SqlCommand cmd = new SqlCommand("SELECT MainCriteriaWeighting, MainCriteriaName FROM MainCriteria WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "'"))
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
 
-                    lstDisplay.Items.Clear();
+                    lstMainCriDisplay.Items.Clear();
+                    lstMainCriDisplay.Columns.Clear();
+                    lstMainCriDisplay.Columns.Add("Main Criteria Weighting:", -2, HorizontalAlignment.Left);
+                    lstMainCriDisplay.Columns.Add("Main Criteria:", -2, HorizontalAlignment.Left);
 
                     SqlDataReader DR = cmd.ExecuteReader();
 
                     while (DR.Read())
                     {
-                        lstDisplay.Items.Add(DR[0] + "\t" + DR[1]);
+                        ListViewItem item = new ListViewItem(new[] { DR[0].ToString(), DR[1].ToString() });
+                        lstMainCriDisplay.Items.Add(item);
                     }
+                    lstMainCriDisplay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    lstMainCriDisplay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                    DR.Close();
+                }
+
+                using (SqlCommand cmd = new SqlCommand("SELECT MainCriteriaName, SubCriteriaWeighting, SubCriteriaName FROM SubCriteria WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "'"))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    lstSubCriDisplay.Items.Clear();
+                    lstSubCriDisplay.Columns.Clear();
+                    lstSubCriDisplay.Columns.Add("Main Criteria:", -2, HorizontalAlignment.Left);
+                    lstSubCriDisplay.Columns.Add("Sub Criteria Weighting:", -2, HorizontalAlignment.Left);
+                    lstSubCriDisplay.Columns.Add("Sub Criteria:", -2, HorizontalAlignment.Left);
+
+                    SqlDataReader DR = cmd.ExecuteReader();
+
+                    while (DR.Read())
+                    {
+                        ListViewItem item = new ListViewItem(new[] { DR[0].ToString(), DR[1].ToString(), DR[2].ToString() });
+                        lstSubCriDisplay.Items.Add(item);
+                    }
+                    lstSubCriDisplay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    lstSubCriDisplay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                     DR.Close();
                 }
 
@@ -121,7 +150,7 @@ namespace FYP_DAR_Tool
                 using (SqlConnection conn = new SqlConnection(connection.ToString()))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO MainCriteria (DecisionName, CriteriaName, CriteriaWeighting) VALUES (@Decision, @CriteriaName, @CriteriaWeighting)"))
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO MainCriteria (DecisionName, MainCriteriaName, MainCriteriaWeighting) VALUES (@Decision, @CriteriaName, @CriteriaWeighting)"))
                     {
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = conn;
@@ -136,6 +165,163 @@ namespace FYP_DAR_Tool
                     txtMainCriWeight.Text = "";
                     conn.Close();
                 }
+            }
+            RefreshData();
+        }
+
+        private void btnSubmitSubCriteria_Click(object sender, EventArgs e)
+        {
+            if (cmbMainCriteria.Text == "" || txtSubCriName.Text == "" || txtSubCriWeight.Text == "")
+            {
+                MessageBox.Show("Please enter the name of the main and sub criteria and the weighting of the sub criteria");
+            }
+            else if (cmbMainCriteria.Text != "" && txtSubCriName.Text != "" && txtSubCriWeight.Text != "")
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connection.ToString()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO SubCriteria (DecisionName, MainCriteriaName, SubCriteriaName, SubCriteriaWeighting) VALUES (@Decision, @MainCriteriaName, @CriteriaName, @CriteriaWeighting)"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.Parameters.AddWithValue("@Decision", lblCurrDecision.Text);
+                        cmd.Parameters.AddWithValue("@MainCriteriaName", cmbMainCriteria.Text);
+                        cmd.Parameters.AddWithValue("@CriteriaName", txtSubCriName.Text);
+                        cmd.Parameters.AddWithValue("@CriteriaWeighting", txtSubCriWeight.Text);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    cmbMainCriteria.Text = "";
+                    txtSubCriName.Text = "";
+                    txtSubCriWeight.Text = "";
+                    conn.Close();
+                }
+            }
+            RefreshData();
+        }
+
+        private void btnToSolutionForm_Click(object sender, EventArgs e)
+        {
+            var solution = new frmSolution();
+            this.Hide();
+            solution.Show();
+        }
+
+        private void btnUpdateMainCriteria_Click(object sender, EventArgs e)
+        {
+            //lstSubCriDisplay.SelectedItems[0].SubItems[0].Text;
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstMainCriDisplay.SelectedIndices[0] == -1 || txtMainCriWeight.Text == "" || txtMainCriName.Text == "")
+                {
+                    MessageBox.Show("Please select the criteria you wish to edit, and make sure that the criteria name and weighting fields are filled.");
+                }
+                else if (lstMainCriDisplay.SelectedIndices[0] != -1 && txtMainCriWeight.Text != "" && txtMainCriName.Text != "")
+                {
+                    using (SqlCommand cmd = new SqlCommand("UPDATE MainCriteria SET MainCriteriaName = @CriteriaName, MainCriteriaWeighting = @CriteriaWeighting WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "' AND MainCriteriaName = '" + lstMainCriDisplay.SelectedItems[0].SubItems[1].Text.ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.Parameters.AddWithValue("@CriteriaName", txtMainCriName.Text);
+                        cmd.Parameters.AddWithValue("@CriteriaWeighting", txtMainCriWeight.Text);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            txtMainCriWeight.Text = "";
+            txtMainCriName.Text = "";
+            RefreshData();
+        }
+
+        private void btnUpdateSubCriteria_Click(object sender, EventArgs e)
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstSubCriDisplay.SelectedIndices[0] == -1 || (cmbMainCriteria.Text == "" && txtSubCriWeight.Text == "" || cmbMainCriteria.Text == "" && txtSubCriName.Text == ""))
+                {
+                    MessageBox.Show("Please select the criteria you wish to edit, and make sure that the main and sub criteria names and weighting fields are filled.");
+                }
+                else if (lstSubCriDisplay.SelectedIndices[0] != -1 && cmbMainCriteria.Text != "" && txtSubCriWeight.Text != "" && txtSubCriName.Text != "")
+                {
+                    using (SqlCommand cmd = new SqlCommand("UPDATE SubCriteria SET MainCriteriaName = @MainCriteriaName, SubCriteriaName = @SubCriteriaName, SubCriteriaWeighting = @SubCriteriaWeighting WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "' AND MainCriteriaName = '" + lstSubCriDisplay.SelectedItems[0].SubItems[0].Text.ToString() + "' AND SubCriteriaName = '" + lstSubCriDisplay.SelectedItems[0].SubItems[2].Text.ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.Parameters.AddWithValue("@MainCriteriaName", cmbMainCriteria.Text);
+                        cmd.Parameters.AddWithValue("@SubCriteriaName", txtSubCriName.Text);
+                        cmd.Parameters.AddWithValue("@SubCriteriaWeighting", txtSubCriWeight.Text);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            cmbMainCriteria.Text = "";
+            txtSubCriName.Text = "";
+            txtSubCriWeight.Text = "";
+            RefreshData();
+        }
+
+        private void btnDeleteMainCriteria_Click(object sender, EventArgs e)
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstMainCriDisplay.SelectedIndices[0] == -1)
+                {
+                    MessageBox.Show("Please select the criteria you wish to delete by clicking on it..");
+                }
+                else if (lstMainCriDisplay.SelectedIndices[0] != -1)
+                {
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM MainCriteria WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "' AND MainCriteriaName = '" + lstMainCriDisplay.SelectedItems[0].SubItems[1].Text.ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
+            }
+            RefreshData();
+        }
+
+        private void btnDeleteSubCriteria_Click(object sender, EventArgs e)
+        {
+            var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connection.ToString()))
+            {
+                conn.Open();
+                if (lstSubCriDisplay.SelectedIndices[0] == -1)
+                {
+                    MessageBox.Show("Please select the criteria you wish to delete by clicking on it..");
+                }
+                else if (lstSubCriDisplay.SelectedIndices[0] != -1)
+                {
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM SubCriteria WHERE DecisionName = '" + lblCurrDecision.Text.ToString() + "' AND SubCriteriaName = '" + lstSubCriDisplay.SelectedItems[0].SubItems[2].Text.ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                conn.Close();
             }
             RefreshData();
         }
