@@ -28,7 +28,6 @@ namespace FYP_DAR_Tool
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand("SELECT DecisionName FROM Decision"))
                 {
-                    cmbDecision.Items.Clear();
                     lstDecisionDisplay.Items.Clear();
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = conn;
@@ -37,7 +36,6 @@ namespace FYP_DAR_Tool
 
                     while (DR.Read())
                     {
-                        cmbDecision.Items.Add(DR[0]);
                         lstDecisionDisplay.Items.Add(DR[0]);
                     }
                     DR.Close();
@@ -82,14 +80,19 @@ namespace FYP_DAR_Tool
             using (SqlConnection conn = new SqlConnection(connection.ToString()))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE Decision SET IsCurrentDecision = 1 WHERE DecisionName = @Decision"))
+                if (lstDecisionDisplay.SelectedIndices[0] == -1)
                 {
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = conn;
+                    MessageBox.Show("Please select the decision you wish to load.");
+                }
+                else if(lstDecisionDisplay.SelectedIndices[0] != -1)
+                {
+                    using (SqlCommand cmd = new SqlCommand("UPDATE Decision SET IsCurrentDecision = 1 WHERE DecisionName = '" + lstDecisionDisplay.SelectedItems[0].ToString() + "'"))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
 
-                    cmd.Parameters.AddWithValue("@Decision", cmbDecision.Text);
-
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
                 }
                 conn.Close();
             }

@@ -30,7 +30,7 @@
         {
             this.lblCurrDecision = new System.Windows.Forms.Label();
             this.grpSolutionCriteria = new System.Windows.Forms.GroupBox();
-            this.txtCriteriaValue = new System.Windows.Forms.TextBox();
+            this.cmbCriteriaValue = new System.Windows.Forms.ComboBox();
             this.lblCriteriaValue = new System.Windows.Forms.Label();
             this.cmbSolutionCriteria = new System.Windows.Forms.ComboBox();
             this.lblSolutionCriteria = new System.Windows.Forms.Label();
@@ -45,6 +45,12 @@
             this.btnReturnToCriteriaForm = new System.Windows.Forms.Button();
             this.lstSolutionCriteriaDisplay = new System.Windows.Forms.ListView();
             this.lstSolutionDisplay = new System.Windows.Forms.ListView();
+            this.btnUpdateSolutionName = new System.Windows.Forms.Button();
+            this.btnDeleteSolutionName = new System.Windows.Forms.Button();
+            this.btnUpdateSolutionCriteria = new System.Windows.Forms.Button();
+            this.btnDeleteSolutionCriteria = new System.Windows.Forms.Button();
+            this.btnCalcBestSolution = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.grpSolutionCriteria.SuspendLayout();
             this.grpSolutions.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +65,7 @@
             // 
             // grpSolutionCriteria
             // 
-            this.grpSolutionCriteria.Controls.Add(this.txtCriteriaValue);
+            this.grpSolutionCriteria.Controls.Add(this.cmbCriteriaValue);
             this.grpSolutionCriteria.Controls.Add(this.lblCriteriaValue);
             this.grpSolutionCriteria.Controls.Add(this.cmbSolutionCriteria);
             this.grpSolutionCriteria.Controls.Add(this.lblSolutionCriteria);
@@ -72,12 +78,13 @@
             this.grpSolutionCriteria.TabStop = false;
             this.grpSolutionCriteria.Text = "Solution Criteria";
             // 
-            // txtCriteriaValue
+            // cmbCriteriaValue
             // 
-            this.txtCriteriaValue.Location = new System.Drawing.Point(108, 104);
-            this.txtCriteriaValue.Name = "txtCriteriaValue";
-            this.txtCriteriaValue.Size = new System.Drawing.Size(150, 20);
-            this.txtCriteriaValue.TabIndex = 5;
+            this.cmbCriteriaValue.FormattingEnabled = true;
+            this.cmbCriteriaValue.Location = new System.Drawing.Point(108, 104);
+            this.cmbCriteriaValue.Name = "cmbCriteriaValue";
+            this.cmbCriteriaValue.Size = new System.Drawing.Size(150, 21);
+            this.cmbCriteriaValue.TabIndex = 5;
             // 
             // lblCriteriaValue
             // 
@@ -192,9 +199,9 @@
             // lstSolutionCriteriaDisplay
             // 
             this.lstSolutionCriteriaDisplay.FullRowSelect = true;
-            this.lstSolutionCriteriaDisplay.Location = new System.Drawing.Point(13, 208);
+            this.lstSolutionCriteriaDisplay.Location = new System.Drawing.Point(13, 245);
             this.lstSolutionCriteriaDisplay.Name = "lstSolutionCriteriaDisplay";
-            this.lstSolutionCriteriaDisplay.Size = new System.Drawing.Size(261, 177);
+            this.lstSolutionCriteriaDisplay.Size = new System.Drawing.Size(261, 214);
             this.lstSolutionCriteriaDisplay.TabIndex = 9;
             this.lstSolutionCriteriaDisplay.UseCompatibleStateImageBehavior = false;
             this.lstSolutionCriteriaDisplay.View = System.Windows.Forms.View.Details;
@@ -204,16 +211,80 @@
             this.lstSolutionDisplay.FullRowSelect = true;
             this.lstSolutionDisplay.Location = new System.Drawing.Point(13, 12);
             this.lstSolutionDisplay.Name = "lstSolutionDisplay";
-            this.lstSolutionDisplay.Size = new System.Drawing.Size(261, 190);
+            this.lstSolutionDisplay.Size = new System.Drawing.Size(261, 227);
             this.lstSolutionDisplay.TabIndex = 10;
             this.lstSolutionDisplay.UseCompatibleStateImageBehavior = false;
             this.lstSolutionDisplay.View = System.Windows.Forms.View.Details;
+            // 
+            // btnUpdateSolutionName
+            // 
+            this.btnUpdateSolutionName.Location = new System.Drawing.Point(293, 381);
+            this.btnUpdateSolutionName.Name = "btnUpdateSolutionName";
+            this.btnUpdateSolutionName.Size = new System.Drawing.Size(86, 36);
+            this.btnUpdateSolutionName.TabIndex = 11;
+            this.btnUpdateSolutionName.Text = "Update Solution Name";
+            this.btnUpdateSolutionName.UseVisualStyleBackColor = true;
+            this.btnUpdateSolutionName.Click += new System.EventHandler(this.btnUpdateSolutionName_Click);
+            // 
+            // btnDeleteSolutionName
+            // 
+            this.btnDeleteSolutionName.Location = new System.Drawing.Point(293, 423);
+            this.btnDeleteSolutionName.Name = "btnDeleteSolutionName";
+            this.btnDeleteSolutionName.Size = new System.Drawing.Size(86, 36);
+            this.btnDeleteSolutionName.TabIndex = 12;
+            this.btnDeleteSolutionName.Text = "Delete Solution Name";
+            this.btnDeleteSolutionName.UseVisualStyleBackColor = true;
+            this.btnDeleteSolutionName.Click += new System.EventHandler(this.btnDeleteSolutionName_Click);
+            // 
+            // btnUpdateSolutionCriteria
+            // 
+            this.btnUpdateSolutionCriteria.Location = new System.Drawing.Point(385, 381);
+            this.btnUpdateSolutionCriteria.Name = "btnUpdateSolutionCriteria";
+            this.btnUpdateSolutionCriteria.Size = new System.Drawing.Size(89, 36);
+            this.btnUpdateSolutionCriteria.TabIndex = 13;
+            this.btnUpdateSolutionCriteria.Text = "Update Solution Criteria";
+            this.btnUpdateSolutionCriteria.UseVisualStyleBackColor = true;
+            this.btnUpdateSolutionCriteria.Click += new System.EventHandler(this.btnUpdateSolutionCriteria_Click);
+            // 
+            // btnDeleteSolutionCriteria
+            // 
+            this.btnDeleteSolutionCriteria.Location = new System.Drawing.Point(385, 423);
+            this.btnDeleteSolutionCriteria.Name = "btnDeleteSolutionCriteria";
+            this.btnDeleteSolutionCriteria.Size = new System.Drawing.Size(89, 36);
+            this.btnDeleteSolutionCriteria.TabIndex = 14;
+            this.btnDeleteSolutionCriteria.Text = "Delete Solution Criteria";
+            this.btnDeleteSolutionCriteria.UseVisualStyleBackColor = true;
+            this.btnDeleteSolutionCriteria.Click += new System.EventHandler(this.btnDeleteSolutionCriteria_Click);
+            // 
+            // btnCalcBestSolution
+            // 
+            this.btnCalcBestSolution.Location = new System.Drawing.Point(494, 391);
+            this.btnCalcBestSolution.Name = "btnCalcBestSolution";
+            this.btnCalcBestSolution.Size = new System.Drawing.Size(111, 36);
+            this.btnCalcBestSolution.TabIndex = 15;
+            this.btnCalcBestSolution.Text = "Calculate Best Solution";
+            this.btnCalcBestSolution.UseVisualStyleBackColor = true;
+            this.btnCalcBestSolution.Click += new System.EventHandler(this.btnCalcBestSolution_Click);
+            // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(584, 39);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(138, 293);
+            this.listView1.TabIndex = 16;
+            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // frmSolution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 397);
+            this.ClientSize = new System.Drawing.Size(734, 471);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.btnCalcBestSolution);
+            this.Controls.Add(this.btnDeleteSolutionCriteria);
+            this.Controls.Add(this.btnUpdateSolutionCriteria);
+            this.Controls.Add(this.btnDeleteSolutionName);
+            this.Controls.Add(this.btnUpdateSolutionName);
             this.Controls.Add(this.lstSolutionDisplay);
             this.Controls.Add(this.lstSolutionCriteriaDisplay);
             this.Controls.Add(this.btnReturnToCriteriaForm);
@@ -244,7 +315,6 @@
         private System.Windows.Forms.GroupBox grpSolutions;
         private System.Windows.Forms.TextBox txtSolutionName;
         private System.Windows.Forms.Label lblSolutionName;
-        private System.Windows.Forms.TextBox txtCriteriaValue;
         private System.Windows.Forms.Label lblCriteriaValue;
         private System.Windows.Forms.Button btnSubmitSolutionName;
         private System.Windows.Forms.Button btnSubmitSolutionCriteria;
@@ -252,5 +322,12 @@
         private System.Windows.Forms.Button btnReturnToCriteriaForm;
         private System.Windows.Forms.ListView lstSolutionCriteriaDisplay;
         private System.Windows.Forms.ListView lstSolutionDisplay;
+        private System.Windows.Forms.ComboBox cmbCriteriaValue;
+        private System.Windows.Forms.Button btnUpdateSolutionName;
+        private System.Windows.Forms.Button btnDeleteSolutionName;
+        private System.Windows.Forms.Button btnUpdateSolutionCriteria;
+        private System.Windows.Forms.Button btnDeleteSolutionCriteria;
+        private System.Windows.Forms.Button btnCalcBestSolution;
+        private System.Windows.Forms.ListView listView1;
     }
 }

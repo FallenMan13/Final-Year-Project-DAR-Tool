@@ -211,7 +211,6 @@ namespace FYP_DAR_Tool
 
         private void btnUpdateMainCriteria_Click(object sender, EventArgs e)
         {
-            //lstSubCriDisplay.SelectedItems[0].SubItems[0].Text;
             var connection = ConfigurationManager.ConnectionStrings["DecisionsServer"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connection.ToString()))
