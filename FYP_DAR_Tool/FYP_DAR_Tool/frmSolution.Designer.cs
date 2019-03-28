@@ -50,7 +50,6 @@
             this.btnUpdateSolutionCriteria = new System.Windows.Forms.Button();
             this.btnDeleteSolutionCriteria = new System.Windows.Forms.Button();
             this.btnCalcBestSolution = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.grpSolutionCriteria.SuspendLayout();
             this.grpSolutions.SuspendLayout();
             this.SuspendLayout();
@@ -266,20 +265,11 @@
             this.btnCalcBestSolution.UseVisualStyleBackColor = true;
             this.btnCalcBestSolution.Click += new System.EventHandler(this.btnCalcBestSolution_Click);
             // 
-            // listView1
-            // 
-            this.listView1.Location = new System.Drawing.Point(584, 39);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(138, 293);
-            this.listView1.TabIndex = 16;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
             // frmSolution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 471);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.btnCalcBestSolution);
             this.Controls.Add(this.btnDeleteSolutionCriteria);
             this.Controls.Add(this.btnUpdateSolutionCriteria);
@@ -328,6 +318,5 @@
         private System.Windows.Forms.Button btnUpdateSolutionCriteria;
         private System.Windows.Forms.Button btnDeleteSolutionCriteria;
         private System.Windows.Forms.Button btnCalcBestSolution;
-        private System.Windows.Forms.ListView listView1;
     }
 }

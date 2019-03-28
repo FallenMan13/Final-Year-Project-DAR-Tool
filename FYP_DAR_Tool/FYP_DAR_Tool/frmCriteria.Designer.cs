@@ -59,7 +59,7 @@
             // lblMainCriWeight
             // 
             this.lblMainCriWeight.AutoSize = true;
-            this.lblMainCriWeight.Location = new System.Drawing.Point(65, 50);
+            this.lblMainCriWeight.Location = new System.Drawing.Point(65, 74);
             this.lblMainCriWeight.Name = "lblMainCriWeight";
             this.lblMainCriWeight.Size = new System.Drawing.Size(90, 13);
             this.lblMainCriWeight.TabIndex = 1;
@@ -67,7 +67,7 @@
             // 
             // txtMainCriWeight
             // 
-            this.txtMainCriWeight.Location = new System.Drawing.Point(161, 47);
+            this.txtMainCriWeight.Location = new System.Drawing.Point(161, 71);
             this.txtMainCriWeight.Name = "txtMainCriWeight";
             this.txtMainCriWeight.Size = new System.Drawing.Size(182, 20);
             this.txtMainCriWeight.TabIndex = 2;
@@ -87,7 +87,7 @@
             // 
             // txtMainCriName
             // 
-            this.txtMainCriName.Location = new System.Drawing.Point(161, 77);
+            this.txtMainCriName.Location = new System.Drawing.Point(161, 44);
             this.txtMainCriName.Name = "txtMainCriName";
             this.txtMainCriName.Size = new System.Drawing.Size(182, 20);
             this.txtMainCriName.TabIndex = 4;
@@ -95,7 +95,7 @@
             // lblMainCriName
             // 
             this.lblMainCriName.AutoSize = true;
-            this.lblMainCriName.Location = new System.Drawing.Point(65, 80);
+            this.lblMainCriName.Location = new System.Drawing.Point(65, 47);
             this.lblMainCriName.Name = "lblMainCriName";
             this.lblMainCriName.Size = new System.Drawing.Size(70, 13);
             this.lblMainCriName.TabIndex = 3;

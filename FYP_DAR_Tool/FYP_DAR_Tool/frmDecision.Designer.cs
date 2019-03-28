@@ -65,11 +65,11 @@
             // lblDecisionName
             // 
             this.lblDecisionName.AutoSize = true;
-            this.lblDecisionName.Location = new System.Drawing.Point(63, 65);
+            this.lblDecisionName.Location = new System.Drawing.Point(58, 65);
             this.lblDecisionName.Name = "lblDecisionName";
-            this.lblDecisionName.Size = new System.Drawing.Size(73, 13);
+            this.lblDecisionName.Size = new System.Drawing.Size(79, 13);
             this.lblDecisionName.TabIndex = 5;
-            this.lblDecisionName.Text = "New Decision";
+            this.lblDecisionName.Text = "Decision Name";
             // 
             // btnLoadDecision
             // 
