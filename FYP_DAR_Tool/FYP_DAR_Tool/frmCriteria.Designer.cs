@@ -126,7 +126,7 @@
             // 
             // txtSubCriName
             // 
-            this.txtSubCriName.Location = new System.Drawing.Point(161, 94);
+            this.txtSubCriName.Location = new System.Drawing.Point(161, 69);
             this.txtSubCriName.Name = "txtSubCriName";
             this.txtSubCriName.Size = new System.Drawing.Size(182, 20);
             this.txtSubCriName.TabIndex = 10;
@@ -134,7 +134,7 @@
             // lblSubCriName
             // 
             this.lblSubCriName.AutoSize = true;
-            this.lblSubCriName.Location = new System.Drawing.Point(65, 97);
+            this.lblSubCriName.Location = new System.Drawing.Point(65, 72);
             this.lblSubCriName.Name = "lblSubCriName";
             this.lblSubCriName.Size = new System.Drawing.Size(92, 13);
             this.lblSubCriName.TabIndex = 9;
@@ -143,7 +143,7 @@
             // lblSubCriWeight
             // 
             this.lblSubCriWeight.AutoSize = true;
-            this.lblSubCriWeight.Location = new System.Drawing.Point(65, 71);
+            this.lblSubCriWeight.Location = new System.Drawing.Point(65, 101);
             this.lblSubCriWeight.Name = "lblSubCriWeight";
             this.lblSubCriWeight.Size = new System.Drawing.Size(90, 13);
             this.lblSubCriWeight.TabIndex = 5;
@@ -160,7 +160,7 @@
             // 
             // txtSubCriWeight
             // 
-            this.txtSubCriWeight.Location = new System.Drawing.Point(161, 68);
+            this.txtSubCriWeight.Location = new System.Drawing.Point(161, 98);
             this.txtSubCriWeight.Name = "txtSubCriWeight";
             this.txtSubCriWeight.Size = new System.Drawing.Size(182, 20);
             this.txtSubCriWeight.TabIndex = 6;
@@ -284,6 +284,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(850, 493);
             this.Controls.Add(this.btnDeleteSubCriteria);
             this.Controls.Add(this.btnDeleteMainCriteria);

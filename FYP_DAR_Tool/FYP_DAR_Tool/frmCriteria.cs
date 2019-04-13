@@ -168,7 +168,7 @@ namespace FYP_DAR_Tool
                 }
                 else if (!success || result < 0 || result > 10)
                 {
-                    MessageBox.Show("Please ensure that the weighting assigned to the criteria is a number between and including 0 to 10.");
+                    MessageBox.Show("Please ensure that the weighting assigned to the criteria is an integer (no decimal values) between and including 0 to 10.");
                 }
                 else if (txtMainCriName.Text != "" && txtMainCriWeight.Text != "" && result >= 0 && result <= 10)
                 {
@@ -214,7 +214,7 @@ namespace FYP_DAR_Tool
                 }
                 else if (!success || result < 0 || result > 10)
                 {
-                    MessageBox.Show("Please ensure that the weighting assigned to the criteria is a number between and including 0 to 10.");
+                    MessageBox.Show("Please ensure that the weighting assigned to the criteria is an integer (no decimal values) between and including 0 to 10.");
                 }
                 else if (cmbMainCriteria.Text != "" && txtSubCriName.Text != "" && txtSubCriWeight.Text != "" && result >= 0 && result <= 10)
                 {
